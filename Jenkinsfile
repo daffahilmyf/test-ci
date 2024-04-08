@@ -5,24 +5,33 @@ pipeline {
         stage("Verify cargo") {
             steps {
                 script {
-                    def command = IS_WINDOWS ? 'cargo --version' : 'cargo --version'
-                    sh command
+                    if (IS_WINDOWS) {
+                        bat 'cargo --version'
+                    } else {
+                        sh 'cargo --version'
+                    }
                 }
             }
         }
         stage("Build") {
             steps {
                 script {
-                    def command = IS_WINDOWS ? 'cargo build' : 'cargo build'
-                    sh command
+                    if (IS_WINDOWS) {
+                        bat 'cargo build'
+                    } else {
+                        sh 'cargo build'
+                    }
                 }
             }
         }
         stage("Test") {
             steps {
                 script {
-                    def command = IS_WINDOWS ? 'cargo test' : 'cargo test'
-                    sh command
+                    if (IS_WINDOWS) {
+                        bat 'cargo test'
+                    } else {
+                        sh 'cargo test'
+                    }
                 }
             }
         }
