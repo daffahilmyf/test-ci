@@ -6,10 +6,16 @@ pipeline {
             steps {
                 echo "IS_WINDOWS=${IS_WINDOWS}"
                 script {
-                    if (IS_WINDOWS) {
-                        bat 'cargo --version'
-                    } else {
-                        sh 'cargo --version'
+                    try {
+                        if (IS_WINDOWS) {
+                            bat 'cargo --version'
+                        } else {
+                            sh 'cargo --version'
+                        }
+                    } catch (Exception e) {
+                        echo "Failed to verify cargo: ${e}"
+                        // You can also use error() to mark the stage as failed
+                        error("Failed to verify cargo")
                     }
                 }
             }
@@ -17,10 +23,15 @@ pipeline {
         stage("Build") {
             steps {
                 script {
-                    if (IS_WINDOWS) {
-                        bat 'cargo build'
-                    } else {
-                        sh 'cargo build'
+                    try {
+                        if (IS_WINDOWS) {
+                            bat 'cargo build'
+                        } else {
+                            sh 'cargo build'
+                        }
+                    } catch (Exception e) {
+                        echo "Build failed: ${e}"
+                        error("Build failed")
                     }
                 }
             }
@@ -28,10 +39,15 @@ pipeline {
         stage("Test") {
             steps {
                 script {
-                    if (IS_WINDOWS) {
-                        bat 'cargo test'
-                    } else {
-                        sh 'cargo test'
+                    try {
+                        if (IS_WINDOWS) {
+                            bat 'cargo test'
+                        } else {
+                            sh 'cargo test'
+                        }
+                    } catch (Exception e) {
+                        echo "Tests failed: ${e}"
+                        error("Tests failed")
                     }
                 }
             }
