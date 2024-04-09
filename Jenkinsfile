@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage("Verify cargo") {
             steps {
+                echo "IS_WINDOWS=${IS_WINDOWS}"
                 script {
                     if (IS_WINDOWS) {
                         bat 'cargo --version'
