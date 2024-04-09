@@ -4,18 +4,12 @@ pipeline {
     stages {
         stage("Verify cargo") {
             steps {
-                echo "IS_WINDOWS=${IS_WINDOWS}"
+                echo "Running on ${os}"
                 script {
-                    try {
-                        if (IS_WINDOWS) {
-                            bat 'cargo --version'
-                        } else {
-                            sh 'cargo --version'
-                        }
-                    } catch (Exception e) {
-                        echo "Failed to verify cargo: ${e}"
-                        // You can also use error() to mark the stage as failed
-                        error("Failed to verify cargo")
+                    if (os == "WINDOWS") {
+                        bat 'cargo --version'
+                    } else {
+                        sh 'cargo --version'
                     }
                 }
             }
@@ -23,15 +17,10 @@ pipeline {
         stage("Build") {
             steps {
                 script {
-                    try {
-                        if (IS_WINDOWS) {
-                            bat 'cargo build'
-                        } else {
-                            sh 'cargo build'
-                        }
-                    } catch (Exception e) {
-                        echo "Build failed: ${e}"
-                        error("Build failed")
+                    if (os == "WINDOWS") {
+                        bat 'cargo build'
+                    } else {
+                        sh 'cargo build'
                     }
                 }
             }
@@ -39,15 +28,10 @@ pipeline {
         stage("Test") {
             steps {
                 script {
-                    try {
-                        if (IS_WINDOWS) {
-                            bat 'cargo test'
-                        } else {
-                            sh 'cargo test'
-                        }
-                    } catch (Exception e) {
-                        echo "Tests failed: ${e}"
-                        error("Tests failed")
+                    if (os == "WINDOWS") {
+                        bat 'cargo test'
+                    } else {
+                        sh 'cargo test'
                     }
                 }
             }
