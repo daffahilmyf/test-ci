@@ -3,14 +3,20 @@ pipeline {
 
     stages {
         stage("Verify cargo") {
-            
-            echo "Verify cargo"
+            steps {
+                echo "Verify cargo"
+            }
         }
         stage("Build") {
-            echo "Build"
+            steps {
+                echo "Build"
+            }
+
         }
         stage("Test") {
-            echo "Test"
+            steps {
+                echo "Test"
+            }
         }
     }
 }
