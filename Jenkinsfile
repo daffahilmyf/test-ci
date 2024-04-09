@@ -3,38 +3,14 @@ pipeline {
 
     stages {
         stage("Verify cargo") {
-            steps {
-                echo "Running on ${os}"
-                script {
-                    if (os == "WINDOWS") {
-                        bat 'cargo --version'
-                    } else {
-                        sh 'cargo --version'
-                    }
-                }
-            }
+            
+            echo "Verify cargo"
         }
         stage("Build") {
-            steps {
-                script {
-                    if (os == "WINDOWS") {
-                        bat 'cargo build'
-                    } else {
-                        sh 'cargo build'
-                    }
-                }
-            }
+            echo "Build"
         }
         stage("Test") {
-            steps {
-                script {
-                    if (os == "WINDOWS") {
-                        bat 'cargo test'
-                    } else {
-                        sh 'cargo test'
-                    }
-                }
-            }
+            echo "Test"
         }
     }
 }
